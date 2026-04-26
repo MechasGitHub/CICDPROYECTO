@@ -1,0 +1,227 @@
+{
+  "datasets": [
+    {
+      "name": "6075cae7",
+      "displayName": "movies",
+      "config": {
+        "version": "1.1",
+        "source": "catalog_au.bronze.movies",
+        "dimensions": [
+          {
+            "name": "id",
+            "expr": "source.id",
+            "displayName": "Id"
+          },
+          {
+            "name": "title",
+            "expr": "source.title",
+            "displayName": "Title"
+          },
+          {
+            "name": "genres",
+            "expr": "source.genres",
+            "displayName": "Genres"
+          },
+          {
+            "name": "language",
+            "expr": "source.language",
+            "displayName": "Language"
+          },
+          {
+            "name": "user_score",
+            "expr": "source.user_score",
+            "displayName": "User Score"
+          },
+          {
+            "name": "runtime_hour",
+            "expr": "source.runtime_hour",
+            "displayName": "Runtime Hour"
+          },
+          {
+            "name": "runtime_min",
+            "expr": "source.runtime_min",
+            "displayName": "Runtime Min"
+          },
+          {
+            "name": "release_date",
+            "expr": "source.release_date",
+            "displayName": "Release Date"
+          },
+          {
+            "name": "vote_count",
+            "expr": "source.vote_count",
+            "displayName": "Vote Count"
+          },
+          {
+            "name": "movie_id",
+            "expr": "source.movie_id",
+            "displayName": "Movie Id"
+          },
+          {
+            "name": "source",
+            "expr": "source.source",
+            "displayName": "Source"
+          },
+          {
+            "name": "load_date",
+            "expr": "source.load_date",
+            "displayName": "Load Date"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "255dd0a1",
+      "displayName": "filmdetails",
+      "config": {
+        "version": "1.1",
+        "source": "catalog_au.bronze.filmdetails",
+        "dimensions": [
+          {
+            "name": "film_id",
+            "expr": "source.film_id",
+            "displayName": "Film Id"
+          },
+          {
+            "name": "director",
+            "expr": "source.director",
+            "displayName": "Director"
+          },
+          {
+            "name": "top_billed",
+            "expr": "source.top_billed",
+            "displayName": "Top Billed"
+          },
+          {
+            "name": "budget_usd",
+            "expr": "source.budget_usd",
+            "displayName": "Budget Usd"
+          },
+          {
+            "name": "revenue_usd",
+            "expr": "source.revenue_usd",
+            "displayName": "Revenue Usd"
+          },
+          {
+            "name": "ingestion_date",
+            "expr": "source.ingestion_date",
+            "displayName": "Ingestion Date"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "156e2082",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "1bbf6f89",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"color: #FF3621;\">**Detalle de Peliculas**</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "eb7f823b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "255dd0a1",
+                  "fields": [
+                    {
+                      "name": "top_billed",
+                      "expression": "`top_billed`"
+                    },
+                    {
+                      "name": "director",
+                      "expression": "`director`"
+                    },
+                    {
+                      "name": "sum(budget_usd)",
+                      "expression": "SUM(`budget_usd`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Total Budget USD por Director y Top Billed",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "director",
+                  "displayName": "Director",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(budget_usd)",
+                  "displayName": "Total Budget USD",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "top_billed",
+                  "displayName": "Top Billed",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
